@@ -1,10 +1,10 @@
 ﻿using System.Net.Http;
 
-namespace AccountApi.Services
+namespace AccountApi
 {
-    public class TransactionClient
+    public class CustomerClient : ICustomerClient
     {
-        public TransactionClient(HttpClient httpClient)
+        public CustomerClient(HttpClient httpClient)
         {
             httpClient.DefaultRequestHeaders.Add("Accept", "*/*");
             httpClient.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory");

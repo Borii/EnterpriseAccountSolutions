@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AccountApi
+namespace TransactionApi.DataAccess
 {
     public class Transaction
     {

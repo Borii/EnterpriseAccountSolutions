@@ -1,15 +1,13 @@
-using AccountApi.Core;
-using AccountApi.DataAccess;
-using AccountApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using TransactionApi.Core;
+using TransactionApi.DataAccess;
 
-namespace AccountApi
+namespace TransactionApi
 {
     public class Startup
     {
@@ -25,15 +23,10 @@ namespace AccountApi
         {
             services.AddControllers();
 
-            services.AddHttpClient<ICustomerClient, CustomerClient>(
-                configureClient => configureClient.BaseAddress = new Uri(Configuration.GetSection("Services:CustomerAPI").Value));
-            services.AddHttpClient<ITransactionClient, TransactionClient>(
-                configureClient => configureClient.BaseAddress = new Uri(Configuration.GetSection("Services:TransactionAPI").Value));
+            services.AddDbContext<TransactionContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
 
-            services.AddDbContext<AccountContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
-
-            services.AddTransient<IAccountDataAccess, AccountDataAccess>();
-            services.AddTransient<IAccountCore, AccountCore>();
+            services.AddTransient<ITransactionDataAccess, TransactionDataAccess>();
+            services.AddTransient<ITransactionCore, TransactionCore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AccountApi
+namespace AccountApi.DataAccess
 {
     public class Account
     {
