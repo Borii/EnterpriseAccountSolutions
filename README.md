@@ -11,9 +11,9 @@ In command line for each project run:
 `dotnet run`
 
 Projects:
-AccountApi - account microservice, hosted locally on `http://localhost:5001`
-TransactionApi - transaction microservice, `http://localhost:5002`
-CustomerApi - customer endpoint `http://localhost:5000` with pre-seeded data
+* AccountApi - account microservice, hosted locally on `http://localhost:5001`
+* TransactionApi - transaction microservice, `http://localhost:5002`
+* CustomerApi - customer endpoint `http://localhost:5000` with pre-seeded data
 
 Each service stores data in SQLite database on disk.
 Account Api uses in memory database for testing the data access layer.
@@ -23,5 +23,6 @@ Api layer with controller logic
 Core layer which hosts business logic
 And data access layer
 
-Or download the executables from Azure pipelines:
+Or download the executables from Azure Pipelines:
 https://dev.azure.com/borjanasavnik/Enterprise%20Account%20Solutions/_build?definitionId=1&_a=summary&repositoryFilter=1&branchFilter=3%2C3%2C3
+Also here you can see test builder and coverage analysis
