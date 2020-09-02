@@ -75,14 +75,11 @@ namespace AccountApi.Tests
             );
 
             var result = await controller.GetUserInfo(customerId);
-
-            Assert.NotNull(result);
-            var resultUserInfo = ((OkObjectResult) result.Result).Value as UserInfo;
-            Assert.NotNull(resultUserInfo);
-            Assert.AreEqual(userInfo.Balance, resultUserInfo.Balance);
-            Assert.AreEqual(userInfo.Name, resultUserInfo.Name);
-            Assert.AreEqual(userInfo.Surname, resultUserInfo.Surname);
-            Assert.AreEqual(userInfo.Accounts.Count(), resultUserInfo.Accounts.Count());
+            Assert.NotNull(result.Value);
+            Assert.AreEqual(userInfo.Balance, result.Value.Balance);
+            Assert.AreEqual(userInfo.Name, result.Value.Name);
+            Assert.AreEqual(userInfo.Surname, result.Value.Surname);
+            Assert.AreEqual(userInfo.Accounts.Count(), result.Value.Accounts.Count());
         }
 
         [Test]
