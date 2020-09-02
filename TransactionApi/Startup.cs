@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TransactionApi.Core;
+using TransactionApi.DataAccess;
 
-namespace CustomerApi
+namespace TransactionApi
 {
     public class Startup
     {
@@ -20,17 +22,11 @@ namespace CustomerApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(
-                    "CorsPolicy",
-                    builder => builder.WithOrigins(Configuration.GetSection("Cors:Url").Value)
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials());
-            });
+            services.AddDbContext<TransactionContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
+
+            services.AddTransient<ITransactionDataAccess, TransactionDataAccess>();
+            services.AddTransient<ITransactionCore, TransactionCore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,8 +36,6 @@ namespace CustomerApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
-            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

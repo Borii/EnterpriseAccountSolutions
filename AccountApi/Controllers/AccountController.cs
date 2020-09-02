@@ -1,94 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AccountApi.Models;
-using AccountApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using AccountApi.Services.Responses;
-using System.Linq;
-using AccountApi.Services.Requests;
-using System.Net.Http;
-using System.Net.Http.Formatting;
+using AccountApi.DataAccess;
+using AccountApi.Core;
+using AccountApi.Core.Models;
 
 namespace AccountApi.Controllers
 {
+
+    /// <summary>
+    ///  Account Api Controller
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly ILogger<AccountController> _logger;
-        private readonly DatabaseContext databaseContext;
-        private readonly CustomerClient customerClient;
-        private readonly TransactionClient transactionClient;
+        /// <summary>The account core - account business logic</summary>
+        private readonly IAccountCore accountCore;
 
         public AccountController(
-            ILogger<AccountController> logger,
-            DatabaseContext databaseContext,
-            CustomerClient customerClient, TransactionClient transactionClient)
+            IAccountCore accountCore
+            )
         {
-            _logger = logger;
-            this.databaseContext = databaseContext;
-            this.customerClient = customerClient;
-            this.transactionClient = transactionClient;
+            this.accountCore = accountCore;
         }
 
+
+        /// <summary>
+        /// Gets all accounts.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Account>>> Get()
-        {
-            var accounts = await databaseContext.Accounts.ToListAsync();
-            return accounts;
-        }
+        public async Task<ActionResult<IEnumerable<Account>>> Get() =>
+            Ok(await this.accountCore.GetAll());
 
+
+        /// <summary>Gets the user information.</summary>
+        /// <param name="customerId">The customer identifier.</param>
+        /// <returns>
+        ///   User info.
+        /// </returns>
         [HttpGet("{customerId}")]
-        public async Task<ActionResult<UserInfo>> GetUserInfo(Guid customerId)
-        {
-            var customerResponse = await customerClient.HttpClient.GetStringAsync(customerId.ToString());
-            var customer = JsonConvert.DeserializeObject<CustomerResponse>(customerResponse);
+        public async Task<ActionResult<UserInfo>> GetUserInfo(Guid customerId) => 
+            await this.accountCore.GetUserInfo(customerId);
 
-            var accounts = await databaseContext.Accounts.Where(account => account.CustomerId == customerId).ToListAsync();
 
-            var transactionsResponses = accounts.Select(async account => await transactionClient.HttpClient.GetStringAsync(account.Id.ToString())).Select(task => task.Result);
-            var transactions = transactionsResponses.SelectMany(transactionsResponse => JsonConvert.DeserializeObject<List<TransactionResponse>>(transactionsResponse));
-
-            var userInfo = new UserInfo
-            {
-                Name = customer.Name,
-                Surname = customer.Surname,
-                Balance = transactions.Sum(transaction => transaction.Amount),
-                Accounts = accounts.Select(account => new AccountDto
-                {
-                    Name = account.Name,
-                    Balance = transactions.Where(transaction => transaction.AccountId == account.Id).Sum(transaction => transaction.Amount),
-                    Transactions = transactions.Where(transaction => transaction.AccountId == account.Id).Select(transaction => new TransactionDto
-                    {
-                        Amount = transaction.Amount,
-                        Timestamp = transaction.Timestamp
-                    })
-                })
-            };
-
-            return userInfo;
-        }
-
+        /// <summary>Adds the specified account to create.</summary>
+        /// <param name="accountToCreateDto">The account to create dto.</param>
+        /// <returns>
+        ///   OkResult
+        /// </returns>
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] AccountToCreateDto accountToCreateDto)
+        public async Task<ActionResult> Add([FromBody] AccountToCreateDto accountToCreateDto)
         {
-            var accountToCreate = new Account { CustomerId = accountToCreateDto.CustomerId.Value, Name = accountToCreateDto.Name };
-            databaseContext.Add(accountToCreate);
-            databaseContext.SaveChanges();
-
-            var createdAccount = databaseContext.Accounts.First(account => account.Id == accountToCreate.Id);
-
-            if (accountToCreateDto.InitialCredit > 0)
-            {
-                var transactionRequest = new TransactionRequest { AccountId = createdAccount.Id, Amount = accountToCreateDto.InitialCredit };
-                await transactionClient.HttpClient.PostAsync(string.Empty, new ObjectContent<TransactionRequest>(transactionRequest, new JsonMediaTypeFormatter()));
-            }
-
-            Console.WriteLine($"{accountToCreateDto.CustomerId} {accountToCreateDto.InitialCredit}");
+            await this.accountCore.Add(accountToCreateDto);
             return Ok();
         }
     }

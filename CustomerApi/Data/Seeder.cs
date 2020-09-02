@@ -13,7 +13,7 @@ namespace CustomerApi.Data
                 return;
             }
 
-            var userData = System.IO.File.ReadAllText("Data/user-seed.json");
+            var userData = System.IO.File.ReadAllText("Data/customer-seed.json");
             var customers = JsonConvert.DeserializeObject<List<Customer>>(userData);
 
             databaseContext.AddRange(customers);

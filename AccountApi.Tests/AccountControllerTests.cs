@@ -75,8 +75,6 @@ namespace AccountApi.Tests
             );
 
             var result = await controller.GetUserInfo(customerId);
-
-            Assert.NotNull(result);
             Assert.NotNull(result.Value);
             Assert.AreEqual(userInfo.Balance, result.Value.Balance);
             Assert.AreEqual(userInfo.Name, result.Value.Name);

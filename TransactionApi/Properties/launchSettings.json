@@ -4,14 +4,14 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:60434",
-      "sslPort": 44325
+      "applicationUrl": "http://localhost:54858",
+      "sslPort": 0
     }
   },
   "profiles": {
-    "CustomerApi": {
+    "TransactionApi": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://localhost:5002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
