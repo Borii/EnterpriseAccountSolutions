@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AccountApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using AccountApi.DataAccess;
 using AccountApi.Core;
+using AccountApi.Core.Models;
 
 namespace AccountApi.Controllers
 {
@@ -22,7 +22,7 @@ namespace AccountApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AccountResponse>>> Get() =>
+        public async Task<ActionResult<IEnumerable<Account>>> Get() =>
             Ok(await this.accountCore.GetAll());
 
         [HttpGet("{customerId}")]
@@ -30,7 +30,7 @@ namespace AccountApi.Controllers
             await this.accountCore.GetUserInfo(customerId);
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] AccountToCreateDto accountToCreateDto)
+        public async Task<ActionResult> Add([FromBody] AccountToCreateDto accountToCreateDto)
         {
             await this.accountCore.Add(accountToCreateDto);
             return Ok();

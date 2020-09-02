@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TransactionApi.DataAccess.Dtos;
+using TransactionApi.Shared;
 
 namespace TransactionApi.DataAccess
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TransactionApi.DataAccess.Dtos
+namespace TransactionApi.Shared
 {
     public class TransactionToCreateDto
     {

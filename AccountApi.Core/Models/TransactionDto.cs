@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AccountApi.Models
+namespace AccountApi.Core.Models
 {
     public class TransactionDto
     {

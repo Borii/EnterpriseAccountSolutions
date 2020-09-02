@@ -1,9 +1,11 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
+using AccountApi.Core.Services.Responses;
 
-namespace AccountApi
+namespace AccountApi.Core.Services
 {
     public interface ICustomerClient
     {
-        HttpClient HttpClient { get; }
+        Task<CustomerResponse> GetById(string Id);
     }
 }

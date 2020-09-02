@@ -1,8 +1,5 @@
 ﻿using AccountApi.DataAccess;
-using AccountApi.Models;
 using AccountApi.Services;
-using AccountApi.Services.Requests;
-using AccountApi.Services.Responses;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,6 +7,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
+using AccountApi.Core.Models;
+using AccountApi.Core.Services;
+using AccountApi.Core.Services.Requests;
+using AccountApi.Core.Services.Responses;
 
 namespace AccountApi.Core
 {
@@ -28,21 +29,19 @@ namespace AccountApi.Core
 
         public async Task<UserInfo> GetUserInfo(Guid customerId)
         {
-            var customerResponse = await customerClient.HttpClient.GetStringAsync(customerId.ToString());
-            var customer = JsonConvert.DeserializeObject<CustomerResponse>(customerResponse);
+            var customerResponse = await customerClient.GetById(customerId.ToString());
 
-            var accounts = await accountDataAccess.GetByCustomerId(customerId);
+            var accounts = await this.accountDataAccess.GetByCustomerId(customerId);
 
-            var transactions = accounts.Select(async account => await transactionClient.Get(account.Id.ToString()))
-                .Select(task => task.Result)
-                .SelectMany(JsonConvert.DeserializeObject<List<TransactionResponse>>);
+            var transactions = accounts.Select(async account => await this.transactionClient.Get(account.Id.ToString()))
+                .Select(task => task.Result).SelectMany(x => x.ToList());
 
             var transactionsByAccountId = transactions.ToLookup(transaction => transaction.AccountId, transaction => transaction);
 
             var userInfo = new UserInfo
             {
-                Name = customer.Name,
-                Surname = customer.Surname,
+                Name = customerResponse.Name,
+                Surname = customerResponse.Surname,
                 Balance = transactionsByAccountId.Sum(transaction => transaction.Sum(t => t.Amount)),
                 Accounts = accounts.Select(account => new AccountDto
                 {

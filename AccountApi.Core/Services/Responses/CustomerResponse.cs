@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AccountApi.Services.Responses
+﻿namespace AccountApi.Core.Services.Responses
 {
     public class CustomerResponse
     {

@@ -1,8 +1,8 @@
 ﻿using AccountApi.DataAccess;
-using AccountApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AccountApi.Core.Models;
 
 namespace AccountApi.Core
 {

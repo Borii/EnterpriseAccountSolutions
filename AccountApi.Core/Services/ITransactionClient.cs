@@ -1,14 +1,14 @@
-﻿using AccountApi.Services.Requests;
-using AccountApi.Services.Responses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AccountApi.Core.Services.Requests;
+using AccountApi.Core.Services.Responses;
 
-namespace AccountApi.Services
+namespace AccountApi.Core.Services
 {
     public interface ITransactionClient
     {
-        Task<string> Get(string baseUrl);
+        Task<IEnumerable<TransactionResponse>> Get(string baseUrl);
         Task<HttpResponseMessage> Post(TransactionRequest request);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace AccountApi.Models
+namespace AccountApi.Core.Models
 {
     public class AccountToCreateDto
     {

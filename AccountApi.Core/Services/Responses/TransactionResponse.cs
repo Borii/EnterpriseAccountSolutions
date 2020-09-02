@@ -1,11 +1,7 @@
-﻿using AccountApi.DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using AccountApi.DataAccess;
 
-namespace AccountApi.Services.Responses
+namespace AccountApi.Core.Services.Responses
 {
     public class TransactionResponse
     {

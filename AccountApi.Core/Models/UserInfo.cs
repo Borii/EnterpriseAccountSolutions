@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AccountApi.Models
+namespace AccountApi.Core.Models
 {
     public class UserInfo
     {

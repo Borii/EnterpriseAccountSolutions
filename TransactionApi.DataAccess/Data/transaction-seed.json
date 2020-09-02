@@ -1,0 +1,122 @@
+﻿[
+  {
+    "id": "5f4e4d00a36ed882d1b254c3",
+    "amount": "-290.9904",
+    "accountId": "5f4e4d00e0d801f2233f9f61",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00e34da2997d874297",
+    "amount": "-465.4443",
+    "accountId": "5f4e4d000269e40f08f8d2ac",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d009c6eb0bf857b271b",
+    "amount": "-940.0501",
+    "accountId": "5f4e4d000891b169ac4a9fb0",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d0007b81dd2c7fb6563",
+    "amount": "-626.1312",
+    "accountId": "5f4e4d00154098511157ec30",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00d20a8013ece002a5",
+    "amount": "-1274.5757",
+    "accountId": "5f4e4d004d479f0ac6c03a6e",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00b5438135bc0639c2",
+    "amount": "-313.4891",
+    "accountId": "5f4e4d0035a2bc757ff69fa9",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d008c2f2123158d35d4",
+    "amount": "-1053.475",
+    "accountId": "5f4e4d005ac9822a2291d4b4",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d000eae4069d99e8794",
+    "amount": "-1383.4608",
+    "accountId": "5f4e4d009c41c33ec16da640",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d0023e0e55ef150170b",
+    "amount": "-705.5166",
+    "accountId": "5f4e4d009fa0cca05023dde0",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d0082b46050fe8267c2",
+    "amount": "-1358.6728",
+    "accountId": "5f4e4d002584bdddf68722f0",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00e7847a71c43ddeaf",
+    "amount": "518.7522",
+    "accountId": "5f4e4d009a8aa2e5b740c240",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00bb63d9f34af953cc",
+    "amount": "-1080.6803",
+    "accountId": "5f4e4d009a9611f6e2e48c05",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d0050a6231e16741b37",
+    "amount": "1216.0401",
+    "accountId": "5f4e4d000fa0157331e4065a",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d001ab22c08eb34b846",
+    "amount": "1295.5814",
+    "accountId": "5f4e4d00e6f544fcc051cdd0",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00683529bd6b516b64",
+    "amount": "-1008.4444",
+    "accountId": "5f4e4d00612c3ab59f0f2e49",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d00f5ab37b8c3e95d6f",
+    "amount": "463.9315",
+    "accountId": "5f4e4d008466ef0f1e25dc81",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d005bcd77e35d1442dd",
+    "amount": "662.0424",
+    "accountId": "5f4e4d00822767e1e6ce3daf",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d0042b1e87c7fe9b6b1",
+    "amount": "-558.022",
+    "accountId": "5f4e4d00da70d211100e91e2",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d0071742d1fa807028b",
+    "amount": "691.6736",
+    "accountId": "5f4e4d0042e2a46df5c933f2",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  },
+  {
+    "id": "5f4e4d005bec5ecf811c011c",
+    "amount": "-551.2518",
+    "accountId": "5f4e4d0067b89e95a8c8316f",
+    "timestamp": "2020-08-31 23:09:52.1990218"
+  }
+]

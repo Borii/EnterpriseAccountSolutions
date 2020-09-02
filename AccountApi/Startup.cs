@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using AccountApi.Core.Services;
+using AccountApi.DataAccess.Data;
 
 namespace AccountApi
 {
@@ -31,6 +33,8 @@ namespace AccountApi
                 configureClient => configureClient.BaseAddress = new Uri(Configuration.GetSection("Services:TransactionAPI").Value));
 
             services.AddDbContext<AccountContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
+
+            // call seeder
 
             services.AddTransient<IAccountDataAccess, AccountDataAccess>();
             services.AddTransient<IAccountCore, AccountCore>();
