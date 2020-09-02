@@ -1,6 +1,5 @@
 using AccountApi.Core;
 using AccountApi.DataAccess;
-using AccountApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using AccountApi.Core.Services;
-using AccountApi.DataAccess.Data;
 
 namespace AccountApi
 {
