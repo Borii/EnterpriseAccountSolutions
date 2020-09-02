@@ -1,16 +1,11 @@
 ﻿using AccountApi.DataAccess;
-using AccountApi.Services;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Threading.Tasks;
 using AccountApi.Core.Models;
 using AccountApi.Core.Services;
 using AccountApi.Core.Services.Requests;
-using AccountApi.Core.Services.Responses;
 
 namespace AccountApi.Core
 {
