@@ -16,88 +16,90 @@ namespace AccountApi.Core.Tests
         [Test]
         public async Task GetUserInfo()
         {
-        var accountDataAccessMoq = new Mock<IAccountDataAccess>();
-        var customerClientMoq = new Mock<ICustomerClient>();
-        var transactionClientMoq = new Mock<ITransactionClient>();
+            var accountDataAccessMoq = new Mock<IAccountDataAccess>();
+            var customerClientMoq = new Mock<ICustomerClient>();
+            var transactionClientMoq = new Mock<ITransactionClient>();
 
-        var accountCore = new AccountCore(accountDataAccessMoq.Object, customerClientMoq.Object, transactionClientMoq.Object);
+            var accountCore = new AccountCore(accountDataAccessMoq.Object, customerClientMoq.Object, transactionClientMoq.Object);
 
-        var expectedCustomer = new CustomerResponse()
-        {
-            Name = "John",
-            Surname = "Doe"
-        };
+            var expectedCustomer = new CustomerResponse
+            {
+                Name = "John",
+                Surname = "Doe"
+            };
 
-        var customerId = Guid.NewGuid();
-        var expectedAccount1 = new Account()
-        {
-            Id = Guid.NewGuid(),
-            CustomerId = customerId,
-            Name = "Account01"
-        };
-        var expectedAccount2 = new Account()
-        {
-            Id = Guid.NewGuid(),
-            CustomerId = customerId,
-            Name = "Account02"
-        };
-        var expectedAccount3 = new Account()
-        {
-            Id = Guid.NewGuid(),
-            CustomerId = customerId,
-            Name = "Account03"
-        };
+            var customerId = Guid.NewGuid();
+            var expectedAccount1 = new Account
+            {
+                Id = Guid.NewGuid(),
+                CustomerId = customerId,
+                Name = "Account01"
+            };
+            var expectedAccount2 = new Account
+            {
+                Id = Guid.NewGuid(),
+                CustomerId = customerId,
+                Name = "Account02"
+            };
+            var expectedAccount3 = new Account
+            {
+                Id = Guid.NewGuid(),
+                CustomerId = customerId,
+                Name = "Account03"
+            };
 
-        var accountsList = new List<Account>() { expectedAccount1, expectedAccount2, expectedAccount2 };
+            var accountsList = new List<Account> { expectedAccount1, expectedAccount2, expectedAccount3 };
 
-        customerClientMoq.Setup(x => x.GetById(customerId.ToString())).Returns(async () =>
-            await Task.FromResult(expectedCustomer)
-        );
+            customerClientMoq.Setup(x => x.GetById(customerId.ToString())).Returns(async () =>
+                await Task.FromResult(expectedCustomer)
+            );
 
-        accountDataAccessMoq.Setup(x => x.GetByCustomerId(customerId)).Returns(async () =>
-            await Task.FromResult(accountsList));
+            accountDataAccessMoq.Setup(x => x.GetByCustomerId(customerId)).Returns(async () =>
+                await Task.FromResult(accountsList));
 
-        var expectedTransactions1 = new List<TransactionResponse>() {new TransactionResponse()
-        {
-            AccountId = expectedAccount1.Id,
-            Amount = 50,
-            Timestamp = DateTime.Now
-        }, new TransactionResponse()
-        {
-            AccountId = expectedAccount1.Id,
-            Amount = 500,
-            Timestamp = DateTime.Now
-        }, new TransactionResponse(){
-            AccountId = expectedAccount1.Id,
-            Amount = 500,
-            Timestamp = DateTime.Now
-        }};
+            var expectedTransactions1 = new List<TransactionResponse>
+            {new TransactionResponse
+            {
+                AccountId = expectedAccount1.Id,
+                Amount = 50,
+                Timestamp = DateTime.Now
+            }, new TransactionResponse
+            {
+                AccountId = expectedAccount1.Id,
+                Amount = 500,
+                Timestamp = DateTime.Now
+            }, new TransactionResponse
+            {
+                AccountId = expectedAccount1.Id,
+                Amount = 500,
+                Timestamp = DateTime.Now
+            }};
 
-        transactionClientMoq.Setup(x => x.Get(expectedAccount1.Id.ToString())).Returns(async () =>
-            await Task.FromResult(expectedTransactions1));
+            transactionClientMoq.Setup(x => x.GetByAccountId(expectedAccount1.Id)).Returns(async () =>
+                await Task.FromResult(expectedTransactions1));
 
-        var expectedTransactions2 = new List<TransactionResponse>() { new TransactionResponse()
-        {
+            var expectedTransactions2 = new List<TransactionResponse>
+            {
+                new TransactionResponse
+                {
+                AccountId = expectedAccount2.Id,
+                Amount = 25,
+                Timestamp = DateTime.Now
+            }, new TransactionResponse
+                {
+                AccountId = expectedAccount2.Id,
+                Amount = 250,
+                Timestamp = DateTime.Now
+            }};
 
-        }, new TransactionResponse()
-        {
-            AccountId = expectedAccount2.Id,
-            Amount = 25,
-            Timestamp = DateTime.Now
-        }, new TransactionResponse()
-        {
-            AccountId = expectedAccount2.Id,
-            Amount = 250,
-            Timestamp = DateTime.Now
-        }};
+            transactionClientMoq.Setup(x => x.GetByAccountId(expectedAccount2.Id)).Returns(async () =>
+            await Task.FromResult(expectedTransactions2));
 
-        transactionClientMoq.Setup(x => x.Get(expectedAccount2.Id.ToString())).Returns(async () =>
-        await Task.FromResult(expectedTransactions2));
+            var resultUserInfo = await accountCore.GetUserInfo(customerId);
 
-        var resultUserInfo = await accountCore.GetUserInfo(customerId);
-
-        Assert.NotNull(resultUserInfo);
-        var expectedTransactionsCount = expectedTransactions1.Count + expectedTransactions2.Count;
+            Assert.NotNull(resultUserInfo);
+            var expectedTransactionsCount = expectedTransactions1.Count + expectedTransactions2.Count;
+            Assert.AreEqual(expectedTransactionsCount, resultUserInfo.Accounts.SelectMany(x => x.Transactions).Count());
 
         }
     }

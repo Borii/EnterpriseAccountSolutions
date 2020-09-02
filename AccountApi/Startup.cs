@@ -36,6 +36,16 @@ namespace AccountApi
 
             services.AddTransient<IAccountDataAccess, AccountDataAccess>();
             services.AddTransient<IAccountCore, AccountCore>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "CorsPolicy",
+                    builder => builder.WithOrigins(Configuration.GetSection("Cors:Url").Value)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +55,8 @@ namespace AccountApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

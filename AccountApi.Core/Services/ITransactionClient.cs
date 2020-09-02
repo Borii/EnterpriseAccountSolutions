@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AccountApi.Core.Services.Requests;
@@ -8,7 +9,7 @@ namespace AccountApi.Core.Services
 {
     public interface ITransactionClient
     {
-        Task<IEnumerable<TransactionResponse>> Get(string baseUrl);
+        Task<IEnumerable<TransactionResponse>> GetByAccountId(Guid accountId);
         Task<HttpResponseMessage> Post(TransactionRequest request);
     }
 }

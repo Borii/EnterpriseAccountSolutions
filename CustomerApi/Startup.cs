@@ -21,6 +21,16 @@ namespace CustomerApi
         {
             services.AddControllers();
             services.AddDbContext<DatabaseContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "CorsPolicy",
+                    builder => builder.WithOrigins(Configuration.GetSection("Cors:Url").Value)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,6 +40,8 @@ namespace CustomerApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

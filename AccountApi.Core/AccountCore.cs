@@ -28,7 +28,7 @@ namespace AccountApi.Core
 
             var accounts = await this.accountDataAccess.GetByCustomerId(customerId);
 
-            var transactions = accounts.Select(async account => await this.transactionClient.Get(account.Id.ToString()))
+            var transactions = accounts.Select(async account => await this.transactionClient.GetByAccountId(account.Id))
                 .Select(task => task.Result).SelectMany(x => x.ToList());
 
             var transactionsByAccountId = transactions.ToLookup(transaction => transaction.AccountId, transaction => transaction);

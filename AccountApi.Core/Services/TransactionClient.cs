@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
@@ -19,9 +20,9 @@ namespace AccountApi.Core.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<TransactionResponse>> Get(string baseUrl)
+        public async Task<IEnumerable<TransactionResponse>> GetByAccountId(Guid accountId)
         {
-            var resultAsString = await this.httpClient.GetStringAsync(baseUrl);
+            var resultAsString = await this.httpClient.GetStringAsync(accountId.ToString());
             return JsonConvert.DeserializeObject<List<TransactionResponse>>(resultAsString);
         }
 
