@@ -1,4 +1,5 @@
-using AccountApi.Services;
+using AccountApi.Core;
+using AccountApi.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using AccountApi.Core.Services;
 
 namespace AccountApi
 {
@@ -23,12 +25,27 @@ namespace AccountApi
         {
             services.AddControllers();
 
-            services.AddHttpClient<CustomerClient>(
+            services.AddHttpClient<ICustomerClient, CustomerClient>(
                 configureClient => configureClient.BaseAddress = new Uri(Configuration.GetSection("Services:CustomerAPI").Value));
-            services.AddHttpClient<TransactionClient>(
+            services.AddHttpClient<ITransactionClient, TransactionClient>(
                 configureClient => configureClient.BaseAddress = new Uri(Configuration.GetSection("Services:TransactionAPI").Value));
 
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
+            services.AddDbContext<AccountContext>(options => options.UseSqlite(Configuration.GetSection("ConnectionStrings:SqliteConnection").Value));
+
+            // call seeder
+
+            services.AddTransient<IAccountDataAccess, AccountDataAccess>();
+            services.AddTransient<IAccountCore, AccountCore>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "CorsPolicy",
+                    builder => builder.WithOrigins(Configuration.GetSection("Cors:Url").Value)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +55,8 @@ namespace AccountApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 
