@@ -72,5 +72,6 @@ steps:
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'
   inputs:
+    pathToSources: '$(System.DefaultWorkingDirectory)'
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml'
