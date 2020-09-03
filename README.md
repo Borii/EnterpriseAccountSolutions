@@ -24,5 +24,8 @@ Core layer which hosts business logic
 And data access layer
 
 Or download the executables from Azure Pipelines:
-https://dev.azure.com/borjanasavnik/Enterprise%20Account%20Solutions/_build?definitionId=1&_a=summary&repositoryFilter=1&branchFilter=3%2C3%2C3
-Also here you can see test builder and coverage analysis
+https://dev.azure.com/borjanasavnik/_apis/resources/Containers/8581640/drop?itemPath=drop%2FWebApp.zip
+
+Azure Pipelines project homepage
+https://dev.azure.com/borjanasavnik/Enterprise%20Account%20Solutions/_build
+Here you can see test resultsr and coverage analysis
